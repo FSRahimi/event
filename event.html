@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create Account</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f7;
+
+      min-height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+
+      background: white;
+
+      padding: 35px;
+
+      border-radius: 15px;
+
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      text-align: center;
+      color: #777;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+
+      padding: 12px;
+
+      border: 1px solid #ccc;
+
+      border-radius: 8px;
+
+      font-size: 16px;
+
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #4f46e5;
+    }
+
+    .counter {
+      text-align: right;
+      font-size: 12px;
+      color: #777;
+      margin-top: 5px;
+    }
+
+    .error {
+      color: #e11d48;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    button {
+      width: 100%;
+
+      padding: 13px;
+
+      border: none;
+
+      border-radius: 8px;
+
+      background: #4f46e5;
+
+      color: white;
+
+      font-size: 16px;
+
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #4338ca;
+    }
+
+    .success {
+      margin-top: 20px;
+
+      padding: 12px;
+
+      border-radius: 8px;
+
+      background: #dcfce7;
+
+      color: #166534;
+
+      text-align: center;
+
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1 class="title">Create Account</h1>
+
+    <p class="description">
+      Enter your information to create an account.
+    </p>
+
+
+    <form id="registrationForm">
+
+      <!-- NAME -->
+      <div class="form-group">
+
+        <label for="name">
+          Full Name
+        </label>
+
+        <input
+          id="name"
+          type="text"
+          placeholder="Enter your full name"
+        >
+
+        <p id="nameError" class="error"></p>
+
+      </div>
+
+
+      <!-- EMAIL -->
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          placeholder="example@email.com"
+        >
+
+        <p id="emailError" class="error"></p>
+
+      </div>
+
+
+      <!-- PASSWORD -->
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+        >
+
+        <div class="counter">
+          <span id="passwordCount">0</span>/8 characters
+        </div>
+
+        <p id="passwordError" class="error"></p>
+
+      </div>
+
+
+      <!-- SUBMIT -->
+      <button id="submitButton" type="submit">
+        Create Account
+      </button>
+
+    </form>
+
+
+    <div id="successMessage" class="success">
+      Account created successfully!
+    </div>
+
+  </div>
+
+
+  <script>
+
+    // ==========================================
+    // SELECT ELEMENTS
+    // ==========================================
+
+    const form = document.querySelector("#registrationForm");
+
+    const nameInput = document.querySelector("#name");
+
+    const emailInput = document.querySelector("#email");
+
+    const passwordInput = document.querySelector("#password");
+
+    const submitButton = document.querySelector("#submitButton");
+
+    const nameError = document.querySelector("#nameError");
+
+    const emailError = document.querySelector("#emailError");
+
+    const passwordError = document.querySelector("#passwordError");
+
+    const passwordCount = document.querySelector("#passwordCount");
+
+    const successMessage = document.querySelector("#successMessage");
+
+
+    // ==========================================
+    // 1. INPUT EVENT
+    // ==========================================
+
+    passwordInput.addEventListener("input", function () {
+
+      // Get the current password
+      const password = passwordInput.value;
+
+      // Get its length
+      const length = password.length;
+
+      // Display the length
+      passwordCount.textContent = length;
+
+    });
+
+
+    // ==========================================
+    // 2. KEYDOWN EVENT
+    // ==========================================
+
+    nameInput.addEventListener("keydown", function (event) {
+
+      console.log("Key pressed:", event.key);
+
+      if (event.key === "Enter") {
+
+        console.log("User pressed Enter in the name field.");
+
+      }
+
+    });
+
+
+    // ==========================================
+    // 3. CLICK EVENT
+    // ==========================================
+
+    submitButton.addEventListener("click", function () {
+
+      console.log("Create Account button clicked.");
+
+    });
+
+
+    // ==========================================
+    // 4. SUBMIT EVENT
+    // ==========================================
+
+    form.addEventListener("submit", function (event) {
+
+      // Stop the browser from refreshing the page
+      event.preventDefault();
+
+
+      // ==========================================
+      // GET VALUES
+      // ==========================================
+
+      const name = nameInput.value.trim();
+
+      const email = emailInput.value.trim();
+
+      const password = passwordInput.value.trim();
+
+
+      // ==========================================
+      // CLEAR OLD ERRORS
+      // ==========================================
+
+      nameError.textContent = "";
+
+      emailError.textContent = "";
+
+      passwordError.textContent = "";
+
+      successMessage.style.display = "none";
+
+
+      // ==========================================
+      // VALIDATION
+      // ==========================================
+
+      let isValid = true;
+
+
+      // NAME VALIDATION
+
+      if (name === "") {
+
+        nameError.textContent = "Please enter your name.";
+
+        isValid = false;
+
+      }
+
+
+      // EMAIL VALIDATION
+
+      if (email === "") {
+
+        emailError.textContent = "Please enter your email.";
+
+        isValid = false;
+
+      }
+
+
+      // PASSWORD VALIDATION
+
+      if (password === "") {
+
+        passwordError.textContent = "Please enter a password.";
+
+        isValid = false;
+
+      }
+
+      else if (password.length < 8) {
+
+        passwordError.textContent =
+          "Password must be at least 8 characters.";
+
+        isValid = false;
+
+      }
+
+
+      // ==========================================
+      // IF FORM IS INVALID
+      // ==========================================
+
+      if (!isValid) {
+
+        return;
+
+      }
+
+
+      // ==========================================
+      // IF FORM IS VALID
+      // ==========================================
+
+      console.log("Name:", name);
+
+      console.log("Email:", email);
+
+      console.log("Password:", password);
+
+
+      successMessage.style.display = "block";
+
+
+      // Clear the form
+      form.reset();
+
+      passwordCount.textContent = "0";
+
+    });
+
+  </script>
+
+</body>
+</html>
